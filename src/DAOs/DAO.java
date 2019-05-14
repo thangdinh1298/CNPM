@@ -1,3 +1,5 @@
+package DAOs;
+
 import java.sql.*;
 
 public class DAO {
@@ -34,6 +36,6 @@ public class DAO {
     }
 
 //    public static void main(String[] args) {
-//        new DAO();
+//        new DAOs.DAO();
 //    }
 }
