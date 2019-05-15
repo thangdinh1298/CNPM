@@ -2,7 +2,10 @@ package Stats;
 
 import Entities.Reader;
 
-public class ReaderStat extends Reader {
+import javax.swing.*;
+import java.awt.event.ActionListener;
+
+public class ReaderStat extends JFrame implements ActionListener {
     private int booksBorrowed;
     private int overdueBooks;
 

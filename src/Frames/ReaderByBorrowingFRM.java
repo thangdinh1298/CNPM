@@ -4,14 +4,14 @@ import DAOs.ReaderStatDAO;
 import Stats.ReaderStat;
 
 import javax.swing.*;
-import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.sql.Date;
 
@@ -20,16 +20,23 @@ public class ReaderByBorrowingFRM extends JFrame implements ActionListener {
     private JTextField txtEndDate;
     private JButton btnSearch;
     private JButton btnBack;
-    private JButton btnResult;
+//    private JButton btnResult;
     private JTable tblResult;
     private JLabel lblStartDate;
     private JLabel lblEndDate;
     private ArrayList<JButton> selectButtons;
+     ArrayList<ReaderStat> stats;
+    private ArrayList<JButton> listSelect;
 
     private static final int WIDTH = 600;
     private static final int HEIGHT = 300;
 
     public ReaderByBorrowingFRM() throws HeadlessException {
+
+        listSelect = new ArrayList<>();
+        stats = new ArrayList<>();
+        DefaultTableModel m = new ReaderStatTableModel();
+        System.out.println(m.getRowCount());
         selectButtons = new ArrayList<>();
         txtStartDate = new JTextField("yyyy/mm/dd");
         txtEndDate = new JTextField("yyyy/mm/dd");
@@ -37,16 +44,17 @@ public class ReaderByBorrowingFRM extends JFrame implements ActionListener {
         btnSearch.addActionListener(this);
         btnBack = new JButton("Back");
         btnBack.addActionListener(this);
-        btnResult = new JButton("Result");
-        btnResult.addActionListener(this);
-        tblResult = new JTable(new DefaultTableModel(null, columnNames));
+//        btnResult = new JButton("Result");
+//        btnResult.addActionListener(this);
+        tblResult = new JTable(new ReaderStatTableModel());
         lblStartDate = new JLabel("Start date");
         lblEndDate = new JLabel("End date");
         txtStartDate.setSize(80, 20);
         txtEndDate.setSize(80, 20);
 
         TableCellRenderer buttonRenderer = new JTableButtonRenderer();
-        tblResult.getColumn("Details").setCellRenderer(buttonRenderer);
+        tblResult.getColumn("Detail").setCellRenderer(buttonRenderer);
+        tblResult.addMouseListener(new JTableButtonMouseListener(tblResult));
 
 
         this.setLayout(new BorderLayout());
@@ -99,6 +107,7 @@ public class ReaderByBorrowingFRM extends JFrame implements ActionListener {
     }
 
     private void btnSearchClicked() throws ParseException {
+        stats.clear();
         ReaderStatDAO rdao = new ReaderStatDAO();
         String sDate = txtStartDate.getText();
         String eDate = txtEndDate.getText();
@@ -106,24 +115,31 @@ public class ReaderByBorrowingFRM extends JFrame implements ActionListener {
         Date sd = Date.valueOf(sDate);
         Date ed = Date.valueOf(eDate);
 
-        ArrayList<ReaderStat> stats = rdao.getReaderStat(sd, ed);
+        stats = rdao.getReaderStat(sd, ed);
 
         DefaultTableModel data = (DefaultTableModel) tblResult.getModel();
         data.setRowCount(0);
 
-        System.out.println("Stat size is: " + stats.size());
-
-        int count = 1;
-        for(ReaderStat stat: stats) {
-            Object[] row = new Object[6];
-            row[0] = String.valueOf(count);
-            row[1] = stat.getFullname();
-            row[2] = stat.getAddress();
-            row[3] = stat.getTel();
-            row[4] = stat.getBooksBorrowed();
-            row[5] = new JButton("Select");
-            data.addRow(row);
+        listSelect.clear();
+        for(ReaderStat stat: stats){
+            JButton btn = new JButton("Select");
+            btn.addActionListener(this);
+            listSelect.add(btn);
         }
+
+//        System.out.println("Stat size is: " + stats.size());
+
+//        int count = 1;
+//        for(ReaderStat stat: stats) {
+//            Object[] row = new Object[6];
+//            row[0] = String.valueOf(count);
+//            row[1] = stat.getFullname();
+//            row[2] = stat.getAddress();
+//            row[3] = stat.getTel();
+//            row[4] = stat.getBooksBorrowed();
+//            row[5] = new JButton("Select");
+//            data.addRow(row);
+//        }
 
     }
 
@@ -140,55 +156,88 @@ public class ReaderByBorrowingFRM extends JFrame implements ActionListener {
                 e1.printStackTrace();
             }
         }
-        else{
-
-        }
+        for(int i=0; i<listSelect.size(); i++)
+            if(btnClicked.equals(listSelect.get(i))){
+                btnSelectClick(i);
+                return;
+            }
     }
 
-    private static class JTableButtonRenderer implements TableCellRenderer {
-        @Override public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+    private void btnSelectClick(int i) {
+        System.out.println("Hello");
+    }
+
+    class JTableButtonRenderer implements TableCellRenderer {
+        @Override public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+                                                                 boolean hasFocus, int row, int column) {
             JButton button = (JButton)value;
             return button;
         }
     }
 
-    public static class JTableModel extends AbstractTableModel {
-        private static final long serialVersionUID = 1L;
-        private static final String[] COLUMN_NAMES = new String[] {"Id", "Stuff", "Button1", "Button2"};
-        private static final Class<?>[] COLUMN_TYPES = new Class<?>[] {Integer.class, String.class, JButton.class,  JButton.class};
+    class ReaderStatTableModel extends DefaultTableModel {
+        private String[] columnNames = {"TT", "ReaderName", "Address", "Tel", "BooksBorrowed", "Detail"};
+        private final Class<?>[] columnTypes = new  Class<?>[] {Integer.class, String.class, String.class,  String.class,
+                Integer.class, JButton.class};
 
         @Override public int getColumnCount() {
-            return COLUMN_NAMES.length;
+            return columnNames.length;
         }
 
         @Override public int getRowCount() {
-            return 4;
+            return stats.size();
         }
 
         @Override public String getColumnName(int columnIndex) {
-            return COLUMN_NAMES[columnIndex];
+            return columnNames[columnIndex];
         }
 
         @Override public Class<?> getColumnClass(int columnIndex) {
-            return COLUMN_TYPES[columnIndex];
+            return columnTypes[columnIndex];
         }
 
         @Override public Object getValueAt(final int rowIndex, final int columnIndex) {
             /*Adding components*/
             switch (columnIndex) {
-                case 0: return rowIndex;
-                case 1: return "Text for "+rowIndex;
-                case 2: // fall through
-                    /*Adding button and creating click listener*/
-                case 3: final JButton button = new JButton(COLUMN_NAMES[columnIndex]);
-                    button.addActionListener(new ActionListener() {
-                        public void actionPerformed(ActionEvent arg0) {
-                            JOptionPane.showMessageDialog(JOptionPane.getFrameForComponent(button),
-                                    "Button clicked for row "+rowIndex);
-                        }
-                    });
-                    return button;
+                case 0:
+                    return rowIndex;
+                case 1:
+                    return stats.get(rowIndex).getFullname();
+                case 2:
+                    return stats.get(rowIndex).getAddress();
+                case 3:
+                    return stats.get(rowIndex).getTel();
+                case 4:
+                    return stats.get(rowIndex).getBooksBorrowed();
+                case 5:
+                    return listSelect.get(rowIndex);
                 default: return "Error";
+            }
+        }
+
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            return false;
+        }
+    }
+    class JTableButtonMouseListener extends MouseAdapter {
+        private final JTable table;
+
+        public JTableButtonMouseListener(JTable table) {
+            this.table = table;
+        }
+
+        public void mouseClicked(MouseEvent e) {
+            int column = table.getColumnModel().getColumnIndexAtX(e.getX()); // get the coloum of the button
+            int row    = e.getY()/table.getRowHeight(); //get the row of the button
+
+            //*Checking the row or column is valid or not
+            if (row < table.getRowCount() && row >= 0  && column < table.getColumnCount() && column >= 0)  {
+                Object value = table.getValueAt(row, column);
+                if (value instanceof JButton) {
+                    //perform a click event
+                    ((JButton)value).doClick();
+                }
             }
         }
     }
