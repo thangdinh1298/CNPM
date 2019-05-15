@@ -9,9 +9,28 @@ public class BorrowingRecord {
 
     public BorrowingRecord(int id, Reader reader, BookItem bookItem, boolean paidDeposit, float billAmount) {
         this.id = id;
-        this.reader = reader;
         this.bookItem = bookItem;
         this.paidDeposit = paidDeposit;
         this.billAmount = billAmount;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public Reader getReader() {
+        return reader;
+    }
+
+    public BookItem getBookItem() {
+        return bookItem;
+    }
+
+    public boolean isPaidDeposit() {
+        return paidDeposit;
+    }
+
+    public float getBillAmount() {
+        return billAmount;
     }
 }

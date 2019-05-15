@@ -24,7 +24,6 @@ public class ReaderByBorrowingFRM extends JFrame implements ActionListener {
     private JTable tblResult;
     private JLabel lblStartDate;
     private JLabel lblEndDate;
-    private ArrayList<JButton> selectButtons;
      ArrayList<ReaderStat> stats;
     private ArrayList<JButton> listSelect;
 
@@ -37,7 +36,6 @@ public class ReaderByBorrowingFRM extends JFrame implements ActionListener {
         stats = new ArrayList<>();
         DefaultTableModel m = new ReaderStatTableModel();
         System.out.println(m.getRowCount());
-        selectButtons = new ArrayList<>();
         txtStartDate = new JTextField("yyyy/mm/dd");
         txtEndDate = new JTextField("yyyy/mm/dd");
         btnSearch = new JButton("Search");
@@ -164,7 +162,10 @@ public class ReaderByBorrowingFRM extends JFrame implements ActionListener {
     }
 
     private void btnSelectClick(int i) {
-        System.out.println("Hello");
+        ReaderStat stat = stats.get(i);
+        new DetailedReaderFRM( txtStartDate.getText(),
+                txtEndDate.getText(),
+                stat.getFullname(), stat.getId());
     }
 
     class JTableButtonRenderer implements TableCellRenderer {

@@ -53,7 +53,7 @@ public class ReaderStatDAO extends DAO {
                 ResultSet rs2 = ps2.executeQuery();
                 rs2.next();
 
-                ReaderStat stat = new ReaderStat(rs2.getString("Fullname")
+                ReaderStat stat = new ReaderStat(entry.getKey(), rs2.getString("Fullname")
                         , rs2.getString("Address")
                         , rs2.getString("TelephoneNum"), entry.getValue());
 

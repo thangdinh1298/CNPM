@@ -2,16 +2,14 @@ package Stats;
 
 import Entities.Reader;
 
-import javax.swing.*;
-import java.awt.event.ActionListener;
-
-public class ReaderStat extends JFrame implements ActionListener {
+public class ReaderStat extends Reader {
     private int booksBorrowed;
     private int overdueBooks;
 
-    public ReaderStat(String fullname, String address, String tel, int booksBorrowed) {
+    public ReaderStat(int readerID, String fullname, String address, String tel, int booksBorrowed) {
         super();
 
+        this.id = readerID;
         this.fullname = fullname;
         this.booksBorrowed = booksBorrowed;
         this.address = address;
