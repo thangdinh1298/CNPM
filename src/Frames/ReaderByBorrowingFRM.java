@@ -34,8 +34,6 @@ public class ReaderByBorrowingFRM extends JFrame implements ActionListener {
 
         listSelect = new ArrayList<>();
         stats = new ArrayList<>();
-        DefaultTableModel m = new ReaderStatTableModel();
-        System.out.println(m.getRowCount());
         txtStartDate = new JTextField("yyyy/mm/dd");
         txtEndDate = new JTextField("yyyy/mm/dd");
         btnSearch = new JButton("Search");
@@ -50,17 +48,16 @@ public class ReaderByBorrowingFRM extends JFrame implements ActionListener {
         txtStartDate.setSize(80, 20);
         txtEndDate.setSize(80, 20);
 
-        TableCellRenderer buttonRenderer = new JTableButtonRenderer();
-        tblResult.getColumn("Detail").setCellRenderer(buttonRenderer);
-        tblResult.addMouseListener(new JTableButtonMouseListener(tblResult));
-
-
         this.setLayout(new BorderLayout());
 
         JPanel mainPanel = new JPanel();
         SpringLayout layout = new SpringLayout();
         mainPanel.setLayout(layout);
         JScrollPane pane = new JScrollPane(tblResult);
+
+        TableCellRenderer buttonRenderer = new JTableButtonRenderer();
+        tblResult.getColumn("Detail").setCellRenderer(buttonRenderer);
+        pane.addMouseListener(new JTableButtonMouseListener(tblResult));
 
         // adding
         mainPanel.add(txtStartDate);
@@ -106,6 +103,7 @@ public class ReaderByBorrowingFRM extends JFrame implements ActionListener {
 
     private void btnSearchClicked() throws ParseException {
         stats.clear();
+        listSelect.clear();
         ReaderStatDAO rdao = new ReaderStatDAO();
         String sDate = txtStartDate.getText();
         String eDate = txtEndDate.getText();
@@ -115,15 +113,14 @@ public class ReaderByBorrowingFRM extends JFrame implements ActionListener {
 
         stats = rdao.getReaderStat(sd, ed);
 
-        DefaultTableModel data = (DefaultTableModel) tblResult.getModel();
-        data.setRowCount(0);
-
-        listSelect.clear();
         for(ReaderStat stat: stats){
             JButton btn = new JButton("Select");
             btn.addActionListener(this);
             listSelect.add(btn);
         }
+        ((DefaultTableModel) tblResult.getModel()).fireTableDataChanged();
+        System.out.println(stats.size());
+        System.out.println(listSelect.size());
 
 //        System.out.println("Stat size is: " + stats.size());
 

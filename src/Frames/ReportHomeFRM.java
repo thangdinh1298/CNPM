@@ -12,6 +12,7 @@ public class ReportHomeFRM extends JFrame implements ActionListener {
     private JButton btnBook;
     private JButton btnReaderByBorrowing;
     private JButton btnReaderOverdueBook;
+    private JButton btnBack;
     private final int WIDTH = 800;
     private final int HEIGHT = 600;
     private ArrayList<JButton> buttons;
@@ -20,11 +21,13 @@ public class ReportHomeFRM extends JFrame implements ActionListener {
         btnBook = new JButton("Book");
         btnReaderByBorrowing = new JButton("Reader by borrowing");
         btnReaderOverdueBook = new JButton("Reader by overdue books");
+        btnBack = new JButton("Back");
         buttons = new ArrayList<>();
 
         buttons.add(btnBook);
         buttons.add(btnReaderByBorrowing);
         buttons.add(btnReaderOverdueBook);
+        buttons.add(btnBack);
 
         JPanel mainPanel = new JPanel();
         mainPanel.setSize(WIDTH, HEIGHT);
@@ -41,7 +44,7 @@ public class ReportHomeFRM extends JFrame implements ActionListener {
         this.setSize(300,150);
         this.setVisible(true);
         this.setLocation(200,10);
-//        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
 
     @Override
@@ -53,8 +56,8 @@ public class ReportHomeFRM extends JFrame implements ActionListener {
         else if(btnClicked.equals(btnReaderByBorrowing)){
             new ReaderByBorrowingFRM();
         }
-        else{
-
+        else if (btnClicked.equals(btnBack)){
+            this.dispose();
         }
 
     }

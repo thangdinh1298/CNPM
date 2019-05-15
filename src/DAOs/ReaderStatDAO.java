@@ -19,13 +19,14 @@ public class ReaderStatDAO extends DAO {
         ArrayList<ReaderStat> readerStats = new ArrayList<>();
         System.out.println(sd);
         System.out.println(ed);
-        String sqlBorrowingID = "Select ID, ReaderID from Borrowing where BorrowDate >= ?;";
+        String sqlBorrowingID = "Select ID, ReaderID from Borrowing where BorrowDate >= ? and ReturnDate <= ?;";
         HashMap<Integer, Integer> readerNum = new HashMap<>();
 
 
         try{
             PreparedStatement ps = conn.prepareStatement(sqlBorrowingID);
             ps.setDate(1,  sd);
+            ps.setDate(2,  ed);
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
                 int id = rs.getInt("ID");
@@ -41,7 +42,7 @@ public class ReaderStatDAO extends DAO {
                     readerNum.put(readerID, readerNum.get(readerID) + numBorrowed);
                 }
                 else{
-                    readerNum.put(readerID, numBorrowed);
+                    if(numBorrowed > 0) readerNum.put(readerID, numBorrowed);
                 }
             }
 
