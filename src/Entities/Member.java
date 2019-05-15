@@ -1,24 +1,54 @@
 package Entities;
 
 public class Member {
-    private int id;
-    private String sername;
-    private String password;
-    private String fullname;
-    private String role;
-    private String idcard;
-    private String address;
-    private String tel;
+    protected int id;
+    protected String Username;
+    protected String password;
+    protected String fullname;
+    protected String role;
+    protected String address;
+    protected String tel;
 
-    public Member(int id, String sername, String password, String fullname,
-                  String role, String idcard, String address, String tel) {
+    public int getId() {
+        return id;
+    }
+
+    public String getUsername() {
+        return Username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getFullname() {
+        return fullname;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public String getTel() {
+        return tel;
+    }
+
+    public Member(int id, String Username, String password, String fullname,
+                  String role, String address, String tel) {
         this.id = id;
-        this.sername = sername;
+        this.Username = Username;
         this.password = password;
         this.fullname = fullname;
         this.role = role;
-        this.idcard = idcard;
         this.address = address;
         this.tel = tel;
+    }
+
+    public Member() {
+
     }
 }

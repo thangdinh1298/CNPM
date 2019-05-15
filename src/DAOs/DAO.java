@@ -6,7 +6,7 @@ public class DAO {
     // JDBC driver name and database URL
     //private static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
     private static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/CNPM";
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/CNPM1";
     //"jdbc:mysql://localhost::port/<dbname>";
 
     // Database credentials
