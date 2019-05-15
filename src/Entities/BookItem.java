@@ -23,4 +23,68 @@ public class BookItem {
         this.edition = edition;
         this.depositAmount = depositAmount;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getNamee() {
+        return namee;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getPublisher() {
+        return publisher;
+    }
+
+    public Date getPublishDate() {
+        return publishDate;
+    }
+
+    public String getEdition() {
+        return edition;
+    }
+
+    public float getDepositAmount() {
+        return depositAmount;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setNamee(String namee) {
+        this.namee = namee;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setPublisher(String publisher) {
+        this.publisher = publisher;
+    }
+
+    public void setPublishDate(Date publishDate) {
+        this.publishDate = publishDate;
+    }
+
+    public void setEdition(String edition) {
+        this.edition = edition;
+    }
+
+    public void setDepositAmount(float depositAmount) {
+        this.depositAmount = depositAmount;
+    }
 }

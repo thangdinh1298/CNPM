@@ -33,4 +33,24 @@ public class BorrowingRecord {
     public float getBillAmount() {
         return billAmount;
     }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setReader(Reader reader) {
+        this.reader = reader;
+    }
+
+    public void setBookItem(BookItem bookItem) {
+        this.bookItem = bookItem;
+    }
+
+    public void setPaidDeposit(boolean paidDeposit) {
+        this.paidDeposit = paidDeposit;
+    }
+
+    public void setBillAmount(float billAmount) {
+        this.billAmount = billAmount;
+    }
 }

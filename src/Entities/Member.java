@@ -9,6 +9,21 @@ public class Member {
     protected String address;
     protected String tel;
 
+    public Member(int id, String Username, String password, String fullname,
+                  String role, String address, String tel) {
+        this.id = id;
+        this.Username = Username;
+        this.password = password;
+        this.fullname = fullname;
+        this.role = role;
+        this.address = address;
+        this.tel = tel;
+    }
+
+    public Member() {
+
+    }
+
     public int getId() {
         return id;
     }
@@ -37,18 +52,31 @@ public class Member {
         return tel;
     }
 
-    public Member(int id, String Username, String password, String fullname,
-                  String role, String address, String tel) {
+    public void setId(int id) {
         this.id = id;
-        this.Username = Username;
-        this.password = password;
-        this.fullname = fullname;
-        this.role = role;
-        this.address = address;
-        this.tel = tel;
     }
 
-    public Member() {
+    public void setUsername(String username) {
+        Username = username;
+    }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setTel(String tel) {
+        this.tel = tel;
     }
 }

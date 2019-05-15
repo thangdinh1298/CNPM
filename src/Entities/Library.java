@@ -13,4 +13,44 @@ public class Library {
         this.address = address;
         this.description = description;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public BookItem[] getBookItems() {
+        return bookItems;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setBookItems(BookItem[] bookItems) {
+        this.bookItems = bookItems;
+    }
 }
